@@ -24,8 +24,7 @@ public class VentanaTelevisor extends JFrame {
 	//Textos
 	private JTextPane boxEmpleado;
 	private JTextPane documentoUsuario;
-	//Controlador
-	private ActionListener actionlistener;
+	
 
 	
 
@@ -122,9 +121,7 @@ public class VentanaTelevisor extends JFrame {
 		this.setMaximumSize(this.getSize());
 	}
 	
-	public void setActionlistener(ActionListener actionlistener) {
-		this.actionlistener = actionlistener;
-	}
+	
 	
 	public void limpiar() {
 		this.boxEmpleado.setText("");

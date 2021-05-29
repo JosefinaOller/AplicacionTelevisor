@@ -1,40 +1,36 @@
 package controladorTelevisor;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
 
 import vistaTelevisor.VentanaTelevisor;
 
 
 
-public class Televisor implements ActionListener {
+public class ControladorTelevisor {
 	
 	private VentanaTelevisor vistaTelevisor;
 	private ArrayList <String> listaUsuarios;
 	private ArrayList <Character> listaBoxes;
+	
+	private int puerto=1235;
 
 
 	
-	public Televisor() {
+	public ControladorTelevisor() {
 		
 		this.vistaTelevisor = new VentanaTelevisor();
 		vistaTelevisor.setVisible(true);
-		vistaTelevisor.setActionlistener(this);
 		this.listaUsuarios = new ArrayList<String>();
 		this.listaBoxes = new ArrayList<Character>();
 
 	}
 
-	private void recibir(int puerto) throws Exception{
+	private void recibir() {
 		 new Thread() {
 				public void run() {
 					
@@ -55,14 +51,10 @@ public class Televisor implements ActionListener {
 
                         mostrar();
 
-	                }
-	                    
-	                  
+	                } 
 
 	                } catch (Exception e) {
 	                    e.printStackTrace();
-	                	//JOptionPane.showMessageDialog(null,"ERROR COMUNICACION TELEVISOR", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-
 	                }
 
 	            }
@@ -97,24 +89,17 @@ public class Televisor implements ActionListener {
 		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void cambiarServidor() {
+		this.setPuerto(puerto+200);
 		
 	}
-	
-	public static void main(String[] args) {
-		Televisor televisor= new Televisor();
-		try {
-			televisor.recibir(1235);
-		} catch (Exception e) {
-			try {
-				televisor.recibir(1435);
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null,"ERROR, NO SE PUDO CONECTAR EL TELEVISOR, POR FAVOR INTENTA DE NUEVO", "ERROR", JOptionPane.WARNING_MESSAGE);
-			}
-		}
+
+	public int getPuerto() {
+		return puerto;
 	}
-	
+
+	public void setPuerto(int puerto) {
+		this.puerto = puerto;
+	}
 	
 }
