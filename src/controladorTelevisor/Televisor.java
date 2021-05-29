@@ -1,4 +1,4 @@
-package modelo;
+package controladorTelevisor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import vista.VentanaTelevisor;
+import vistaTelevisor.VentanaTelevisor;
 
 
 
@@ -32,17 +32,15 @@ public class Televisor implements ActionListener {
 		this.listaUsuarios = new ArrayList<String>();
 		this.listaBoxes = new ArrayList<Character>();
 
-
-		
 	}
 
-	private void recibir() {
+	private void recibir(int puerto) throws Exception{
 		 new Thread() {
 				public void run() {
 					
 	                try {
 	                	
-	                	ServerSocket server = new ServerSocket(1235);
+	                	ServerSocket server = new ServerSocket(puerto);
 	                	
 	                	while (true) {
 	                	Socket s = server.accept();
@@ -63,7 +61,7 @@ public class Televisor implements ActionListener {
 
 	                } catch (Exception e) {
 	                    e.printStackTrace();
-	                	JOptionPane.showMessageDialog(null,"ERROR COMUNICACION TELEVISOR", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+	                	//JOptionPane.showMessageDialog(null,"ERROR COMUNICACION TELEVISOR", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
 
 	                }
 
@@ -107,7 +105,15 @@ public class Televisor implements ActionListener {
 	
 	public static void main(String[] args) {
 		Televisor televisor= new Televisor();
-		televisor.recibir();
+		try {
+			televisor.recibir(1235);
+		} catch (Exception e) {
+			try {
+				televisor.recibir(1435);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null,"ERROR, NO SE PUDO CONECTAR EL TELEVISOR, POR FAVOR INTENTA DE NUEVO", "ERROR", JOptionPane.WARNING_MESSAGE);
+			}
+		}
 	}
 	
 	
