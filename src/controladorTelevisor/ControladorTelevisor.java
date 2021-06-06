@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+
 import vistaTelevisor.VentanaTelevisor;
 
 
@@ -16,6 +17,7 @@ public class ControladorTelevisor {
 	private VentanaTelevisor vistaTelevisor;
 	private ArrayList <String> listaUsuarios;
 	private ArrayList <Character> listaBoxes;
+	private int cambio=0;
 	
 	private int puerto=1235;
 
@@ -27,6 +29,7 @@ public class ControladorTelevisor {
 		vistaTelevisor.setVisible(true);
 		this.listaUsuarios = new ArrayList<String>();
 		this.listaBoxes = new ArrayList<Character>();
+		recibir();
 
 	}
 
@@ -90,7 +93,12 @@ public class ControladorTelevisor {
 	}
 
 	public void cambiarServidor() {
-		this.setPuerto(puerto+200);
+		if(cambio==0) {
+			System.out.println("Televisor cambiando del puerto...");
+			this.setPuerto(puerto+200);
+			recibir();
+			cambio=1;
+		}
 		
 	}
 
